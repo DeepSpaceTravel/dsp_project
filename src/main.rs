@@ -1,6 +1,6 @@
 #![allow(warnings)]
 use cpal::{Data, traits::{DeviceTrait, HostTrait}};
-const sample_rate: u32 = 48000;
+const SAMPLE_RATE: u32 = 48000;
 
 fn init() {
     // Device
@@ -16,8 +16,11 @@ fn init() {
 
     // Device config
     let mut supported_input_configs_range = input_device.supported_input_configs().expect("error while querying configs");
-    // let supported_input_config = supported_input_configs_range.next().expect("no supported config!?").with_max_sample_rate();
-    let supported_input_config = supported_input_configs_range.next().expect("no supported config!?").with_sample_rate(sample_rate);
+    // Query max sample rate
+    println!("{:?}", supported_input_configs_range.next().expect("no supported config!?"));
+    
+    let supported_input_config = supported_input_configs_range.next().expect("no supported config!?").with_max_sample_rate();
+    // let supported_input_config = supported_input_configs_range.next().expect("no supported config!?").with_sample_rate(SAMPLE_RATE);
     println!("{:?}", supported_input_config);
     let input_config = supported_input_config.config();
     println!("{:?}", input_config);
